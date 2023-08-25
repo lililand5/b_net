@@ -4,15 +4,21 @@ development:
   pool: 5
   timeout: 5000
   user: <%= ENV['DATABASE_USERNAME'] %>
+  password: <%= ENV['DATABASE_PASSWORD'] %>
+  host: db
 test:
   adapter: postgresql
   database: <%= ENV.fetch('TEST_DATABASE', 'postgres') %>
   pool: 5
   timeout: 5000
   user: <%= ENV['DATABASE_USERNAME'] %>
+  password: <%= ENV['DATABASE_PASSWORD'] %>
+  host: db
 production:
   adapter: postgresql
   database: <%= ENV['PRODUCTION_DATABASE'] %>
   pool: 5
   timeout: 5000
   user: <%= ENV['DATABASE_USERNAME'] %>
+  password: <%= ENV['DATABASE_PASSWORD'] %>
+  host: db
