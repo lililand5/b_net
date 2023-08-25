@@ -5,7 +5,7 @@ development:
   timeout: 5000
   user: <%= ENV['DATABASE_USERNAME'] %>
   password: <%= ENV['DATABASE_PASSWORD'] %>
-  host: db
+  host: <%= ENV.fetch('DATABASE_HOST', 'localhost') %>
 test:
   adapter: postgresql
   database: <%= ENV.fetch('TEST_DATABASE', 'postgres') %>
@@ -13,7 +13,7 @@ test:
   timeout: 5000
   user: <%= ENV['DATABASE_USERNAME'] %>
   password: <%= ENV['DATABASE_PASSWORD'] %>
-  host: db
+  host: <%= ENV.fetch('DATABASE_HOST', 'localhost') %>
 production:
   adapter: postgresql
   database: <%= ENV['PRODUCTION_DATABASE'] %>
@@ -21,4 +21,4 @@ production:
   timeout: 5000
   user: <%= ENV['DATABASE_USERNAME'] %>
   password: <%= ENV['DATABASE_PASSWORD'] %>
-  host: db
+  host: <%= ENV.fetch('DATABASE_HOST', 'localhost') %>
