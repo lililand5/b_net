@@ -5,6 +5,12 @@ class BaseApi < Grape::API
   mount UserApi
 
   before do
-    authenticate_user!
+    error!('Unauthorized', 401) unless current_user
+  end
+
+  helpers do
+    def current_user
+      @current_user ||= env['warden'].user
+    end
   end
 end
