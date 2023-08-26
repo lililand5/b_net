@@ -52,6 +52,8 @@ gem "bootsnap", require: false
 
 gem 'grape'
 gem 'grape-entity'
+gem 'devise', '~> 4.9'
+
 
 
 group :development, :test do

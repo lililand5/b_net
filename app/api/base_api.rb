@@ -3,4 +3,8 @@ class BaseApi < Grape::API
 
   prefix 'api'
   mount UserApi
+
+  before do
+    authenticate_user!
+  end
 end
