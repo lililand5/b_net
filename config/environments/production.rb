@@ -1,10 +1,11 @@
 require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
+  config.hosts << /\.herokuapp\.com\z/
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Code is not reloaded between requests.
-  config.hosts << /\.herokuapp\.com\z/
+
   config.cache_classes = true
 
   # Eager load code on boot. This eager loads most of Rails and
