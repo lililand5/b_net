@@ -4,7 +4,7 @@ Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Code is not reloaded between requests.
-  config.hosts << "my-network-17bd33be55c0.herokuapp.com"
+  config.hosts << "my-network-f10907b897e2.herokuapp.com"
   config.cache_classes = true
 
   # Eager load code on boot. This eager loads most of Rails and
