@@ -282,6 +282,13 @@ Devise.setup do |config|
   #   manager.default_strategies(scope: :user).unshift :some_external_strategy
   # end
 
+  config.warden do |manager|
+    manager.strategies.add(:token, Devise::Strategies::TokenAuthenticatable)
+    manager.default_strategies(:scope => :user).unshift :token
+    manager.default_strategies(:scope => :user).unshift :database_authenticatable
+    manager.failure_app = BNet::Application
+  end
+
   # ==> Mountable engine configurations
   # When using Devise inside an engine, let's call it `MyEngine`, and this engine
   # is mountable, there are some extra configurations to be taken into account.

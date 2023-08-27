@@ -10,7 +10,7 @@ class BaseApi < Grape::API
 
   helpers do
     def current_user
-      @current_user ||= env['warden'].user
+      @current_user ||= env['warden'].authenticate(scope: :user)
     end
   end
 end

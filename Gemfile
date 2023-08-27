@@ -53,6 +53,7 @@ gem "bootsnap", require: false
 gem 'grape'
 gem 'grape-entity'
 gem 'devise', '~> 4.9'
+gem 'devise-token_authenticatable'
 
 
 
