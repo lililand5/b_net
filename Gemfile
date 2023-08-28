@@ -55,6 +55,7 @@ gem 'grape-entity'
 gem 'devise', '~> 4.9'
 gem 'devise-token_authenticatable'
 gem 'socialization'
+gem 'awesome_pry'
 
 
 
