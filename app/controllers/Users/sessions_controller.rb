@@ -20,11 +20,11 @@ class Users::SessionsController < Devise::SessionsController
     super do |resource|
       if resource.valid?
         cookies[:auth_token] = resource.authentication_token
-
-        redirect_to ENV['FRONTEND_URL'] and return
+        redirect_to ENV['FRONTEND_URL'], allow_other_host: true and return
       end
     end
   end
+
 
   # DELETE /resource/sign_out
   def destroy
