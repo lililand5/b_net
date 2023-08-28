@@ -1,8 +1,4 @@
 class PostsApi < BaseApi
-  before do
-    authenticate!
-  end
-
   resource :posts do
     get 'my' do
       if current_user.posts.empty?
@@ -21,9 +17,7 @@ class PostsApi < BaseApi
     end
 
     get 'feed' do
-      subscriptions_posts = Post.joins(:user).merge(current_user.followees(User))
-      all_posts = (subscriptions_posts.to_a).sort_by(&:created_at).reverse
-      posts = all_posts.map do |post|
+      posts = Post.joins(:user).merge(current_user.followees(User)).order(created_at: :desc).map do |post|
         {
           id: post.id,
           title: post.title,
@@ -41,12 +35,10 @@ class PostsApi < BaseApi
     end
 
     get 'global_posts' do
-      current_user_posts = current_user.posts.pluck(:id)
-      subscribed_user_ids = current_user.followees(User).pluck(:id)
-
-      all_posts = Post.where.not(user_id: [current_user.id] + subscribed_user_ids)
+      excluded_user_ids = [current_user.id] + current_user.followees(User).pluck(:id)
+      all_posts = Post.where.not(user_id: excluded_user_ids)
                       .order(created_at: :desc)
-
+                      .includes(:user)
       posts = all_posts.map do |post|
         {
           id: post.id,
@@ -63,6 +55,7 @@ class PostsApi < BaseApi
 
       { all_posts: posts }
     end
+
 
     post 'create' do
       unless params[:title] && params[:content]

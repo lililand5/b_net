@@ -1,4 +1,8 @@
 class BaseApi < Grape::API
+  before do
+    authenticate!
+  end
+
   format :json
 
   prefix 'api'
