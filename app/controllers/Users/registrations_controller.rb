@@ -5,15 +5,21 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # before_action :configure_account_update_params, only: [:update]
 
   # GET /resource/sign_up
-  # def new
-  #   super
-  # end
+  def new
+    super do |resource|
+      if resource.valid?
+        cookies[:auth_token] = resource.authentication_token
+        # redirect_to ENV['FRONTEND_URL'], allow_other_host: true and return
+      end
+    end
+  end
 
   # POST /resource
   def create
     super do |resource|
       if resource.valid?
         cookies[:auth_token] = resource.authentication_token
+        ap "for debugging"
         redirect_to ENV['FRONTEND_URL'], allow_other_host: true and return
       end
     end
