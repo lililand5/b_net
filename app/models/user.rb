@@ -8,6 +8,12 @@ class User < ApplicationRecord
   acts_as_follower
   acts_as_followable
 
+  has_many :posts, dependent: :destroy
+
+  acts_as_liker
+
+  has_many :comments, dependent: :destroy
+
   before_save :ensure_authentication_token
 
   def ensure_authentication_token

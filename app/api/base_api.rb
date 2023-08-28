@@ -19,5 +19,6 @@ class BaseApi < Grape::API
     end
   end
 
-  mount UserApi
+  mount UsersApi
+  mount PostsApi
 end
