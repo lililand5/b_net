@@ -24,7 +24,7 @@ class Users::SessionsController < Devise::SessionsController
     super do |resource|
       if resource.valid?
         cookies[:auth_token] = resource.authentication_token
-        ap resource.authentication_token
+        ap resource.authentication_token # Для отладки хероку
         redirect_to "#{ENV['FRONTEND_URL']}/?token=#{cookies[:auth_token]}", allow_other_host: true and return
       end
     end
