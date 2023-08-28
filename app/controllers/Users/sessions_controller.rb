@@ -28,14 +28,9 @@ class Users::SessionsController < Devise::SessionsController
 
   # DELETE /resource/sign_out
   def destroy
-    # Находим текущего аутентифицированного пользователя (это делает Devise)
     user = current_user
-
-    # Инвалидируем токен аутентификации
     user.authentication_token = nil
     user.save
-
-    # Вызываем стандартный метод "destroy" из Devise
     super
   end
 
