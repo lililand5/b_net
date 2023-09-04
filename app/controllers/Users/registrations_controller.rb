@@ -1,29 +1,41 @@
 # frozen_string_literal: true
 
 class Users::RegistrationsController < Devise::RegistrationsController
+  # POST /users
+  def create
+    super do |resource|
+      if resource.persisted?
+        handle_successful_registration(resource)
+      else
+        handle_failed_registration(resource)
+      end
+      return
+    end
+  end
+
+  private
+
+  def handle_successful_registration(resource)
+    render json: { auth_token: resource.authentication_token, message: 'Successfully registered' }, status: :created
+  end
+
+  def handle_failed_registration(resource)
+    render json: { errors: resource.errors.full_messages }, status: :unprocessable_entity
+  end
+
+
   # before_action :configure_sign_up_params, only: [:create]
   # before_action :configure_account_update_params, only: [:update]
 
   # GET /resource/sign_up
-  def new
-    super do |resource|
-      if resource.valid?
-        cookies[:auth_token] = resource.authentication_token
-        # redirect_to ENV['FRONTEND_URL'], allow_other_host: true and return
-      end
-    end
-  end
+  # def new
+  #   super
+  # end
 
   # POST /resource
-  def create
-    super do |resource|
-      if resource.valid?
-        cookies[:auth_token] = resource.authentication_token
-        ap "for debugging"
-        redirect_to ENV['FRONTEND_URL'], allow_other_host: true and return
-      end
-    end
-  end
+  # def create
+  #   super
+  # end
 
   # GET /resource/edit
   # def edit
@@ -48,8 +60,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # def cancel
   #   super
   # end
-
-  protected
 
   # If you have extra params to permit, append them to the sanitizer.
   # def configure_sign_up_params

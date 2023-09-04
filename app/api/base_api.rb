@@ -1,7 +1,5 @@
 class BaseApi < Grape::API
-  before do
-    authenticate!
-  end
+  before { authenticate! }
 
   format :json
 
@@ -19,7 +17,20 @@ class BaseApi < Grape::API
     end
 
     def authenticate!
-      error!('Unauthorized. Invalid or expired token.', 401) unless current_user
+      authorization_header = headers['Authorization']
+      if authorization_header.nil?
+        error!('Unauthorized', 401)
+        return
+      end
+
+      token = authorization_header.split(' ').last
+      user = User.find_by(authentication_token: token)
+
+      if user.nil?
+        error!('Unauthorized. Invalid or expired token.', 401)
+      else
+        @current_user = user
+      end
     end
   end
 

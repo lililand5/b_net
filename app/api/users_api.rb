@@ -67,6 +67,5 @@ class UsersApi < BaseApi
         error!('Not following this user.', 400)
       end
     end
-
   end
 end
